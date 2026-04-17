@@ -1,0 +1,15 @@
+name: Angular Workflow
+on: workflow_dispatch
+jobs:
+  build-application:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Welcome
+        run: echo "Hello World!!"
+      - name: Print discussion
+        run: |
+              echo "How is weather today?"
+              echo "It is too hot over here."
+      - name: Print Good bye
+        run: echo "Bye Bye World!!"
+    
