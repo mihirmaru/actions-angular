@@ -16,12 +16,13 @@ on: workflow_dispatch
 env:
   NODE_VERSION: '20.9.0'
 
+defaults:
+  run:
+    working-directory: AngularActions
+
 jobs:
   list-details:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./AngularActions
     steps:
       # - name: list all the files
       #   run: echo "files >>>> "
@@ -33,7 +34,7 @@ jobs:
         with:
           node-version: ${{env.NODE_VERSION}}
           cache: 'npm'
-          cache-dependency-path: 'subdir/package-lock.json'
+          cache-dependency-path: '**/package-lock.json'
       # - name: Cache npm
       #   uses: actions/cache@v4
       #   with:
