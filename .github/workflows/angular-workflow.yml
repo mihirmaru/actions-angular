@@ -1,15 +1,64 @@
 name: Angular Workflow
 on: workflow_dispatch
+#jobs:
+#  build-application:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Print Welcome
+#        run: echo "Hello World!!"
+#      - name: Print discussion
+#        run: |
+#              echo "How is weather today?"
+#              echo "It is too hot over here."
+#      - name: Print Good bye
+#        run: echo "Bye Bye World!!"
+
+env:
+  NODE_VERSION: '20.9.0'
+
 jobs:
-  build-application:
+  list-details:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./AngularActions
     steps:
-      - name: Print Welcome
-        run: echo "Hello World!!"
-      - name: Print discussion
-        run: |
-              echo "How is weather today?"
-              echo "It is too hot over here."
-      - name: Print Good bye
-        run: echo "Bye Bye World!!"
-    
+      # - name: list all the files
+      #   run: echo "files >>>> "
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Use Node.js v ${{env.NODE_VERSION}}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{env.NODE_VERSION}}
+          cache: 'npm'
+          
+      # - name: Cache npm
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #         ${{ runner.os }}-node-
+          
+      - name: Install npm Packages
+        run: npm ci
+
+      # - name: Run Unit Tests
+      #   run: npm test --if-present -- --watch=false --browsers=chromeHeadless
+      #   env:
+      #     CI: true
+      - name: Build Application
+        run: npm run build
+        
+
+
+
+
+
+
+
+
+
+        
