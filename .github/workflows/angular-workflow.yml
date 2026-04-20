@@ -15,7 +15,7 @@ on: workflow_dispatch
 
 env:
   NODE_VERSION: '20.9.0'
-  DIST_FOLDER: 'dist/AngularActions'
+  DIST_FOLDER: 'dist/angular-actions'
 
 defaults:
   run:
