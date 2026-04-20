@@ -15,14 +15,17 @@ on: workflow_dispatch
 
 env:
   NODE_VERSION: '20.9.0'
+  DIST_FOLDER: 'dist/AngularActions'
 
 defaults:
   run:
     working-directory: AngularActions
 
 jobs:
-  list-details:
+  build:
     runs-on: ubuntu-latest
+    outputs:
+      artifact-path: ${{ steps.upload-artifact.outputs.artifact-path || 'dist' }}
     steps:
       # - name: list all the files
       #   run: echo "files >>>> "
@@ -52,7 +55,32 @@ jobs:
       #     CI: true
       - name: Build Application
         run: npm run build
-        
+
+      - name: Upload build artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@v4
+        with: 
+          name: angular-dist
+          path: |
+            ${{ env.DIST_FOLDER }}
+          retention-days: 7
+  
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Download Artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: angular-dist
+  #         path: ./dist
+          
+  #     - name: Deploy to Azure Web App (via publish profile)
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+  #         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  #         package: ./dist/<project-name>
 
 
 
